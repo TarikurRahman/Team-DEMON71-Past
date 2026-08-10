@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rover 71 | Network Jamming Unit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-orange: #ff5e00; 
+            --accent-orange: #e65100;
+            --bg-black: #080808;
+            --card-bg: #111111;
+            --text-gray: #d1d1d1;
+            --border-color: rgba(255, 94, 0, 0.3);
+            --base-font: 'Hind Siliguri', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: #ffffff;
+            font-family: var(--base-font);
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animations */
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--primary-orange)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--primary-orange)); }
+        }
+
+        @keyframes rotate-signal { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Top Bar */
+        .top-nav {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.5);
+        }
+
+        .status-dot { color: #ff3333; margin-right: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Header */
+        .header-section { text-align: center; padding-top: 20px; z-index: 1; }
+        .header-section span {
+            color: var(--primary-orange);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+        .header-section h1 {
+            font-size: 42px;
+            margin: 5px 0;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 94, 0, 0.2);
+        }
+
+        /* Grid */
+        .dashboard-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px 50px;
+            z-index: 1;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 22px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .module-card:hover {
+            border-color: var(--primary-orange);
+            background: #161616;
+            box-shadow: 0 0 30px rgba(255, 94, 0, 0.15);
+        }
+
+        .icon {
+            color: var(--primary-orange);
+            font-size: 28px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .module-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+            border-left: 3px solid var(--primary-orange);
+            padding-left: 10px;
+        }
+
+        .module-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; color: var(--primary-orange); font-size: 13px; font-weight: 700; border-bottom: 1px solid var(--border-color); padding: 10px 5px; }
+        td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #ffffff; font-weight: 600; }
+
+        /* Progress Bar */
+        .jam-stats { margin-top: 15px; }
+        .bar-bg { height: 6px; background: #222; margin-top: 8px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--primary-orange); box-shadow: 0 0 10px var(--primary-orange); }
+
+        /* Layout modifications */
+        .mechanism { grid-column: 1; }
+        .spectrum { grid-column: 2 / span 2; }
+        .danger { border-color: #ff3333; }
+        .danger h2 { border-left-color: #ff3333; color: #ff3333; }
+
+        footer {
+            padding: 12px;
+            background: var(--primary-orange);
+            color: #000;
+            text-align: center;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Icon Animations */
+        .fa-tower-broadcast { animation: pulse-icon 2s infinite ease-in-out; }
+        .fa-radiation { animation: rotate-signal 4s infinite linear; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+
+    <div class="top-nav">
+        <div><i class="fas fa-user-secret"></i> EW-MODULE : SIGNAL INTERCEPTOR</div>
+        <div><span class="status-dot">●</span> JAMMING_PROTOCOL_ACTIVE</div>
+    </div>
+
+    <div class="header-section">
+        <span>SECURITY BRIEFING</span>
+        <h1>নেটওয়ার্ক জ্যামিং মডিউল</h1>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <div class="module-card mechanism">
+            <div class="icon"><i class="fas fa-tower-broadcast"></i></div>
+            <h2>কার্যপদ্ধতি</h2>
+            <p>শত্রু ড্রোন বা রেডিও সিগন্যাল শনাক্ত হওয়া মাত্রই এটি উচ্চ-ক্ষমতাসম্পন্ন নয়েজ সিগন্যাল পাঠিয়ে মূল যোগাযোগ বিচ্ছিন্ন করে দেয়।</p>
+        </div>
+
+        <div class="module-card spectrum">
+            <div class="icon"><i class="fas fa-wave-square"></i></div>
+            <h2>ফ্রিকোয়েন্সি অ্যানালাইসিস</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ব্যান্ডউইথ</th>
+                        <th>সিগন্যাল স্ট্রেন্থ</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2.4 GHz (Drone)</td>
+                        <td style="color: #ff3333;">CRITICAL</td>
+                        <td>JAMMING...</td>
+                    </tr>
+                    <tr>
+                        <td>5.8 GHz (Video)</td>
+                        <td style="color: #ffaa00;">HIGH</td>
+                        <td>INTERRUPTED</td>
+                    </tr>
+                    <tr>
+                        <td>RF (Remote)</td>
+                        <td style="color: #00ff88;">LOW</td>
+                        <td>MONITORING</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module-card methods">
+            <div class="icon"><i class="fas fa-radiation"></i></div>
+            <h2>জ্যামিং ইনটেনসিটি</h2>
+            <div class="jam-stats">
+                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                    <span>NOISE POWER</span><span>92%</span>
+                </div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 92%;"></div></div>
+            </div>
+            <div class="jam-stats" style="margin-top: 15px;">
+                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                    <span>BLOCKING RANGE</span><span>500m</span>
+                </div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 75%; background: #00d4ff; box-shadow: 0 0 10px #00d4ff;"></div></div>
+            </div>
+        </div>
+
+        <div class="module-card usecases">
+            <div class="icon"><i class="fas fa-shield-virus"></i></div>
+            <h2>নিরাপত্তা বৈশিষ্ট্য</h2>
+            <p>• মুহূর্তেই গুপ্তচরবৃত্তি প্রতিরোধ সক্ষম।<br>
+               • ৩৬০° সিগন্যাল ব্লকিং কাভারেজ।<br>
+               • অটোমেটিক থ্রেট শনাক্তকরণ ও নিউট্রালাইজেশন।</p>
+        </div>
+
+        <div class="module-card danger">
+            <div class="icon" style="color: #ff3333;"><i class="fas fa-skull-crossbones"></i></div>
+            <h2>সতর্কতা বার্তা</h2>
+            <p>জ্যামিং মডিউল চলাকালীন স্থানীয় বৈধ যোগাযোগ ব্যবস্থা সাময়িকভাবে বিঘ্নিত হতে পারে। মিশন শেষে জ্যামার নিষ্ক্রিয় করা বাধ্যতামূলক।</p>
+        </div>
+
+    </div>
+
+    <footer>Rover 71 | Electronic Warfare Unit | Security Mission 2026</footer>
+
+    <script>
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>

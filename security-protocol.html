@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rover 71 | Security Protocols</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-orange: #ff5e00; 
+            --accent-orange: #e65100;
+            --bg-black: #080808;
+            --card-bg: #111111;
+            --text-gray: #d1d1d1;
+            --border-color: rgba(255, 94, 0, 0.3);
+            --base-font: 'Hind Siliguri', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: #ffffff;
+            font-family: var(--base-font);
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animations */
+        @keyframes pulse-red {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ff3333); opacity: 1; }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px #ff3333); opacity: 0.8; }
+        }
+
+        @keyframes scan-line {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        /* Top Bar */
+        .top-nav {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.5);
+        }
+
+        .status-dot { color: #00ff88; margin-right: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Header */
+        .header-section { text-align: center; padding-top: 20px; z-index: 1; }
+        .header-section span {
+            color: var(--primary-orange);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+        .header-section h1 {
+            font-size: 42px;
+            margin: 5px 0;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 94, 0, 0.2);
+        }
+
+        /* Grid */
+        .dashboard-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px 50px;
+            z-index: 1;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 22px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            border-color: var(--primary-orange);
+            background: #161616;
+            box-shadow: 0 0 30px rgba(255, 94, 0, 0.15);
+        }
+
+        .icon {
+            color: var(--primary-orange);
+            font-size: 28px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .module-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+            border-left: 3px solid var(--primary-orange);
+            padding-left: 10px;
+        }
+
+        .module-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* GPS Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; color: var(--primary-orange); font-size: 13px; font-weight: 700; border-bottom: 1px solid var(--border-color); padding: 10px 5px; }
+        td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #ffffff; font-weight: 600; font-family: monospace; }
+
+        /* Secure Progress */
+        .secure-stats { margin-top: 15px; }
+        .bar-bg { height: 6px; background: #222; margin-top: 8px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--primary-orange); box-shadow: 0 0 10px var(--primary-orange); }
+
+        /* Layout modifications */
+        .gps-module { grid-column: 1 / span 2; }
+        .wipe-module { grid-column: 3; border-color: #ff3333; }
+        .wipe-module h2 { border-left-color: #ff3333; color: #ff3333; }
+        .wipe-module .icon { color: #ff3333; animation: pulse-red 1.5s infinite; }
+
+        footer {
+            padding: 12px;
+            background: var(--primary-orange);
+            color: #000;
+            text-align: center;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .fa-location-crosshairs { animation: rotate-scan 4s infinite linear; }
+        @keyframes rotate-scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+
+    <div class="top-nav">
+        <div><i class="fas fa-shield-alt"></i> SECURITY UNIT : PROTOCOL_ENFORCED</div>
+        <div><span class="status-dot">●</span> GPS_LINK_ESTABLISHED</div>
+    </div>
+
+    <div class="header-section">
+        <span>MISSION CRITICAL</span>
+        <h1>নিরাপত্তা প্রোটোকল মডিউল</h1>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <div class="module-card gps-module">
+            <div class="icon"><i class="fas fa-location-crosshairs"></i></div>
+            <h2>লাইভ GPS ট্র্যাকিং</h2>
+            <p>উদ্ধার অভিযানের সুবিধার্থে রভারের সঠিক অবস্থান রিয়েল-টাইমে কন্ট্রোল রুমে পাঠানো হয়। এটি স্যাটেলাইট লিঙ্কের মাধ্যমে অফ-গ্রিড এলাকাতেও কাজ করতে সক্ষম।</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>কোঅর্ডিনেট টাইপ</th>
+                        <th>ভ্যালু (Value)</th>
+                        <th>সিগন্যাল লকিং</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Latitude (অক্ষাংশ)</td>
+                        <td>23.8103° N</td>
+                        <td style="color: #00ff88;">LOCKED</td>
+                    </tr>
+                    <tr>
+                        <td>Longitude (দ্রাঘিমাংশ)</td>
+                        <td>90.4125° E</td>
+                        <td style="color: #00ff88;">LOCKED</td>
+                    </tr>
+                    <tr>
+                        <td>Altitude (উচ্চতা)</td>
+                        <td>12.5 Meters</td>
+                        <td style="color: #00ff88;">STABLE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module-card wipe-module">
+            <div class="icon"><i class="fas fa-biohazard"></i></div>
+            <h2>অটো-ডেটা ইরেজার</h2>
+            <p>শত্রুর কব্জায় পড়ার ঝুঁকি থাকলে বা রভারের হার্ডওয়্যারে অননুমোদিত হস্তক্ষেপ শনাক্ত হলে মুহূর্তেই সমস্ত গোপন ডাটা স্থায়ীভাবে মুছে যায়।</p>
+            <div class="secure-stats" style="margin-top: 25px;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:#ff3333;">
+                    <span>SELF-DESTRUCT DATA</span><span>READY</span>
+                </div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 100%; background: #ff3333; box-shadow: 0 0 10px #ff3333;"></div></div>
+            </div>
+        </div>
+
+        <div class="module-card encryption">
+            <div class="icon"><i class="fas fa-user-lock"></i></div>
+            <h2>ইনক্রিপশন লেয়ার</h2>
+            <p>রভার থেকে পাঠানো প্রতিটি ডাটা AES-256 বিট ইনক্রিপশন দ্বারা সুরক্ষিত। এর ফলে মাঝপথে তথ্য চুরি হওয়া অসম্ভব।</p>
+        </div>
+
+        <div class="module-card recovery">
+            <div class="icon"><i class="fas fa-truck-pickup"></i></div>
+            <h2>উদ্ধার মোড (Recovery)</h2>
+            <p>• ইমার্জেন্সি বীকন সিগন্যাল অ্যাক্টিভেশন।<br>
+               • দূরবর্তী কন্ট্রোল রুম থেকে রিমোট লক।<br>
+               • লাস্ট নোন লোকেশন অটো-সেভ ক্লাউড।</p>
+        </div>
+
+        <div class="module-card monitoring">
+            <div class="icon"><i class="fas fa-microchip"></i></div>
+            <h2>টেম্পার প্রোটেকশন</h2>
+            <p>রভারের কেসিং খোলার চেষ্টা করা হলে বা ফিজিক্যাল ড্যামেজ শনাক্ত হলে সিস্টেমটি স্বয়ংক্রিয়ভাবে অ্যালার্ম ট্রিগার করে।</p>
+        </div>
+
+    </div>
+
+    <footer>Rover 71 | Security & Tracking Unit | Mission 2026</footer>
+
+    <script>
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>

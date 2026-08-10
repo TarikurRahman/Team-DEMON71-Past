@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rover 71 | AI Surveillance System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-orange: #ff5e00; 
+            --accent-orange: #e65100;
+            --bg-black: #080808;
+            --card-bg: #111111;
+            --text-gray: #d1d1d1;
+            --border-color: rgba(255, 94, 0, 0.3);
+            --base-font: 'Hind Siliguri', sans-serif;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: #ffffff;
+            font-family: var(--base-font);
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Top Bar */
+        .top-nav {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .status-dot { color: #00ff88; margin-right: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Header */
+        .header-section { text-align: center; padding-top: 20px; z-index: 1; }
+        .header-section span { color: var(--primary-orange); font-size: 14px; font-weight: 700; letter-spacing: 3px; }
+        .header-section h1 { font-size: 42px; margin: 5px 0; font-weight: 700; text-shadow: 0 0 20px rgba(255, 94, 0, 0.2); }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 25px;
+            padding: 20px 50px;
+            z-index: 1;
+        }
+
+        .info-panel { display: flex; flex-direction: column; gap: 20px; }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .module-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-orange);
+            padding-left: 12px;
+        }
+
+        .module-card p { font-size: 15px; line-height: 1.7; color: var(--text-gray); }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,94,0,0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .stat-label { font-size: 11px; color: var(--primary-orange); font-weight: 700; text-transform: uppercase; display: block; }
+        .stat-value { font-size: 18px; font-weight: 700; font-family: monospace; }
+
+        /* Video Feed Section */
+        .video-feed-container {
+            border: 2px solid var(--primary-orange);
+            border-radius: 15px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feed-header {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.6); padding: 5px 15px;
+            border-radius: 5px; font-family: monospace; font-size: 13px;
+        }
+
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .overlay-data {
+            position: absolute; bottom: 20px; right: 20px;
+            background: rgba(0,0,0,0.8); padding: 15px;
+            border: 1px solid var(--primary-orange);
+            font-family: monospace; font-size: 12px; border-radius: 8px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 12px;
+            background: var(--primary-orange);
+            color: #000;
+            text-align: center;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .blink-red { color: #ff3333; animation: blink 1s infinite; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+    <div id="tactical-ring"></div>
+
+    <div class="top-nav">
+        <div><i class="fas fa-microchip"></i> UNIT_71_SYSTEM : ONLINE</div>
+        <div><span class="status-dot">●</span> LIVE ENCRYPTED STREAMING</div>
+    </div>
+
+    <div class="header-section">
+        <span>ADVANCED TACTICAL UNIT</span>
+        <h1>এআই নিরাপত্তা সিস্টেম</h1>
+    </div>
+
+    <main class="dashboard-grid">
+        <section class="info-panel">
+            <div class="module-card">
+                <h2>সিস্টেম বর্ণনা</h2>
+                <p>রিয়েল-টাইম অবজেক্ট রিকগনিশন প্রযুক্তির মাধ্যমে এই মডিউলটি যেকোনো এলাকা অটোমেটিক মনিটর করে। এটি এআই (AI) ব্যবহার করে সন্দেহভাজন বস্তু বা হুমকি শনাক্ত করে সরাসরি হেডকোয়ার্টারে অ্যালার্ট পাঠিয়ে দেয়।</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Engine</span>
+                    <div class="stat-value">YOLO V8</div>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Accuracy</span>
+                    <div class="stat-value">98.4%</div>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Processor</span>
+                    <div class="stat-value">PI 5 (8GB)</div>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Latency</span>
+                    <div class="stat-value">0.02ms</div>
+                </div>
+            </div>
+
+            <div class="module-card" style="margin-top: auto;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; color:var(--primary-orange); margin-bottom:10px;">
+                    <span>AI NEURAL LINK</span><span>CONNECTED</span>
+                </div>
+                <div style="height:4px; background:#222; border-radius:10px; overflow:hidden;">
+                    <div style="width:100%; height:100%; background:var(--primary-orange); box-shadow:0 0 10px var(--primary-orange);"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="video-feed-container">
+            <div class="feed-header">
+                <span class="blink-red">●</span> REC | CAM_01
+            </div>
+            
+            <iframe src="http://127.0.0.1:5000/"></iframe>
+
+            <div class="overlay-data">
+                STATUS: ACTIVE<br>
+                IP_ADDR: 127.0.0.1<br>
+                PORT: 5000<br>
+                GEO: 23.8° N | 90.4° E
+            </div>
+        </section>
+    </main>
+
+    <footer>Rover 71 | AI Surveillance Module | Mission 2026</footer>
+
+    <script>
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>

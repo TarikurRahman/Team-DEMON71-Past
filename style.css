@@ -1,0 +1,2156 @@
+:root {
+    --bg: #080808;
+    --accent: #ff4d00; /* Martian Orange */
+    --text: #e0e0e0;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+}
+
+/* HUD Header */
+.hud-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border);
+    position: fixed; width: 100%; top: 0; z-index: 100;
+    background: rgba(8, 8, 8, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.pulse {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    margin-right: 5px;
+    box-shadow: 0 0 10px #00ff88;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Hero */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+
+.overlay-grid {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px), 
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    mask-image: radial-gradient(circle, black, transparent 80%);
+}
+
+.hero h1 { font-size: 8rem; font-weight: 700; letter-spacing: -5px; line-height: 1; }
+.hero h1 span { color: var(--accent); }
+.tagline { color: var(--accent); letter-spacing: 5px; text-transform: uppercase; font-size: 0.8rem; }
+
+.specs-bar {
+    display: flex; gap: 40px; margin-top: 40px; justify-content: center;
+}
+
+.spec span { font-size: 0.6rem; color: #666; letter-spacing: 1px; }
+
+/* Bento Presentation */
+.presentation { padding: 100px 10%; }
+
+.bento-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 15px;
+}
+
+.bento-box {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.bento-box:hover { border-color: var(--accent); background: rgba(255, 77, 0, 0.02); }
+
+.tech { grid-column: span 1; }
+.image-placeholder { 
+    grid-column: span 2; 
+    background: url('https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?auto=format&fit=crop&w=800&q=80'); /* Sample Mars/Rover Image */
+    background-size: cover;
+    height: 300px;
+    position: relative;
+}
+
+.scan-line {
+    position: absolute; top: 0; width: 100%; height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 15px var(--accent);
+    animation: scan 3s linear infinite;
+}
+
+@keyframes scan { from { top: 0; } to { top: 100%; } }
+
+.sensor h3, .tech h3, .mission h3 { font-size: 0.9rem; color: var(--accent); margin-bottom: 15px; }
+.sensor ul { list-style: none; font-size: 0.9rem; }
+.sensor li { margin-bottom: 5px; color: #bbb; }
+
+.footer {
+    display: flex; justify-content: space-between;
+    padding: 40px 10%; border-top: 1px solid var(--border);
+    font-size: 0.6rem; color: #555; letter-spacing: 1px;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.code-font {
+    font-family: monospace;
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+/* Specs Grid */
+.specs-grid-section { padding: 100px 10%; background: rgba(255, 255, 255, 0.01); }
+
+.specs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.spec-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 4px; /* Clean sharp corners */
+    transition: 0.3s;
+}
+
+.spec-card:hover { background: rgba(255, 77, 0, 0.05); border-color: var(--accent); }
+.spec-card .icon { font-size: 2rem; margin-bottom: 15px; }
+.spec-card h4 { color: var(--accent); margin-bottom: 10px; font-size: 0.9rem; }
+.spec-card p { font-size: 0.8rem; color: #888; }
+
+/* Timeline Section */
+.timeline-section { padding: 100px 10%; }
+
+.timeline {
+    border-left: 1px solid var(--border);
+    padding-left: 30px;
+}
+
+.time-item {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.time-item::before {
+    content: '';
+    position: absolute; left: -36px; top: 5px;
+    width: 10px; height: 10px;
+    background: #333; border-radius: 50%;
+}
+
+.active-time::before { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+.date { font-weight: bold; color: var(--accent); font-size: 0.8rem; margin-bottom: 5px; }
+.desc { font-size: 0.9rem; color: #aaa; }
+
+/* Telemetry Section */
+.telemetry-section { padding: 50px 10%; }
+
+.telemetry-box {
+    border: 1px solid var(--accent);
+    padding: 20px;
+    background: rgba(255, 77, 0, 0.05);
+}
+
+.tele-header {
+    font-size: 0.7rem; font-weight: bold; margin-bottom: 20px;
+    border-bottom: 1px solid var(--accent); display: inline-block;
+}
+
+.tele-grid { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
+
+.chart-mock { display: flex; align-items: flex-end; gap: 5px; height: 100px; }
+.bar { width: 15px; background: var(--accent); opacity: 0.7; }
+.chart-mock span { font-size: 0.7rem; color: var(--accent); margin-left: 10px; }
+
+.status-list p { font-size: 0.8rem; font-family: monospace; margin-bottom: 8px; }
+
+/* General Colors */
+:root {
+    --accent: #ff4d00;
+    --bg-light: #111111;
+    --border-color: rgba(255, 77, 0, 0.2);
+}
+
+/* System Intro */
+.system-intro {
+    padding: 60px 10%;
+}
+
+.intro-box {
+    border-left: 4px solid var(--accent);
+    background: var(--bg-light);
+    padding: 30px;
+    font-family: 'Courier New', monospace;
+    box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+}
+
+.report-header {
+    color: var(--accent);
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+}
+
+.report-content p {
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.highlight {
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 1px solid var(--accent);
+}
+
+/* Tactical Grid */
+.tactical-section { padding: 80px 10%; }
+
+.section-title { margin-bottom: 40px; }
+.sub-text { color: var(--accent); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 3px; }
+
+.tactical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.t-card {
+    background: #0a0a0a;
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 4px; /* Professional Sharp Look */
+    transition: 0.3s;
+}
+
+.t-card:hover {
+    border-color: var(--accent);
+    background: #0f0f0f;
+}
+
+.t-icon { font-size: 2rem; margin-bottom: 20px; }
+.t-card h3 { font-size: 1.1rem; color: #fff; margin-bottom: 10px; }
+.t-card p { font-size: 0.85rem; color: #888; line-height: 1.6; }
+
+/* AI Core System */
+.ai-core-section {
+    padding: 80px 10%;
+    background: #050505;
+}
+
+.ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.ai-box {
+    background: linear-gradient(145deg, #111, #080808);
+    padding: 40px;
+    border: 1px dashed var(--border-color);
+}
+
+.ai-box h3 {
+    color: var(--accent);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.ai-box ul { list-style: none; }
+.ai-box ul li {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #eee;
+}
+
+.ai-box ul li span {
+    color: var(--accent);
+    margin-right: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ai-grid { grid-template-columns: 1fr; }
+}
+
+/* Team Section Styles */
+.team-section {
+    padding: 100px 10%;
+    background: #080808;
+}
+
+.team-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.team-group {
+    display: grid;
+    gap: 20px;
+}
+
+/* Lead group has 2 columns, Support has 3 */
+.lead-group {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.support-group {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.member-card {
+    background: linear-gradient(145deg, #111, #0a0a0a);
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    position: relative;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.member-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(255, 77, 0, 0.15);
+}
+
+.member-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 0;
+    background: var(--accent);
+    transition: 0.4s;
+}
+
+.member-card:hover::before {
+    height: 100%;
+}
+
+.member-info h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.role {
+    color: var(--accent);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 0.8rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social-links a:hover {
+    color: #fff;
+}
+
+/* Icon style for GitHub/Facebook */
+.social-links a i {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .lead-group, .support-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Image Styling inside Member Card */
+.member-img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    overflow: hidden;
+    padding: 5px;
+    background: rgba(255, 77, 0, 0.1);
+    transition: 0.4s;
+}
+
+.member-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover; /* Chobi jate baka na hoye jay */
+    filter: grayscale(100%); /* Premium Black & White effect */
+    transition: 0.4s;
+}
+
+/* Hover effect for image */
+.member-card:hover .member-img {
+    box-shadow: 0 0 20px var(--accent);
+    transform: scale(1.05);
+}
+
+.member-card:hover .member-img img {
+    filter: grayscale(0%); /* Hover korle color hobe */
+}
+
+/* Small adjustments for support group images */
+.small-img {
+    width: 80px;
+    height: 80px;
+}
+
+/* Flexbox adjustment for alignment */
+.member-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Information left side-e thakbe */
+    text-align: left;
+}
+
+/* Detail Page Container */
+.detail-page {
+    background: #050505;
+    color: white;
+}
+
+.detail-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 10%;
+    align-items: center;
+}
+
+.back-btn {
+    text-decoration: none;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 1px solid var(--accent);
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+.module-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    padding: 50px 10%;
+    align-items: center;
+}
+
+.module-tag { color: var(--accent); font-family: monospace; font-size: 0.8rem; }
+.text-content h1 { font-size: 3.5rem; margin: 15px 0; }
+.text-content p { color: #888; line-height: 1.8; }
+
+.features-list { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+.f-item { font-family: monospace; color: var(--accent); margin-bottom: 8px; }
+
+/* Stats in Detail Page */
+.module-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #0a0a0a;
+    padding: 60px 10%;
+    margin-top: 50px;
+    border-top: 1px solid rgba(255, 77, 0, 0.1);
+    text-align: center;
+}
+
+.stat-item h2 { font-size: 4rem; display: inline-block; }
+.stat-item .unit { color: var(--accent); font-size: 1.5rem; font-weight: bold; }
+.stat-item p { font-size: 0.7rem; letter-spacing: 2px; color: #555; margin-top: 10px; }
+
+/* Scan Frame Effect */
+.scan-frame {
+    position: relative;
+    border: 1px solid #222;
+    padding: 10px;
+}
+.scan-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+    background: var(--accent); box-shadow: 0 0 15px var(--accent);
+    animation: scanMove 4s infinite linear;
+}
+@keyframes scanMove { 0% { top: 0; } 100% { top: 100%; } }
+
+/* Radar Visualization Effect for Mine Detection */
+.radar-visual {
+    width: 100%;
+    height: 300px;
+    background: radial-gradient(circle, #1a1a1a 0%, #050505 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.radar-line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(from 0deg at 50% 50%, rgba(255, 77, 0, 0.2) 0deg, transparent 90deg);
+    animation: rotateRadar 4s linear infinite;
+    border-radius: 50%;
+}
+
+@keyframes rotateRadar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.target-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent);
+    animation: blink 1s infinite;
+}
+
+.accent-text { color: var(--accent); }
+
+.pulse { animation: pulseAnim 1.5s infinite; }
+@keyframes pulseAnim {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* AI Surveillance Special Styles */
+.ai-frame {
+    border-color: #00d2ff !important;
+}
+
+.blue-glow {
+    color: #00d2ff;
+    text-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+}
+
+.ai-visual {
+    width: 100%;
+    height: 300px;
+    background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80'); /* Cyber security background */
+    background-size: cover;
+    position: relative;
+    border-radius: 8px;
+}
+
+.target-box {
+    position: absolute;
+    border: 2px solid #00d2ff;
+    background: rgba(0, 210, 255, 0.1);
+}
+
+.target-box span {
+    position: absolute;
+    top: -20px;
+    left: -2px;
+    background: #00d2ff;
+    color: #000;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 5px;
+}
+
+.box-1 { width: 100px; height: 180px; top: 20%; left: 30%; }
+.box-2 { width: 60px; height: 60px; top: 45%; left: 55%; border-color: #ff4d00; }
+.box-2 span { background: #ff4d00; }
+
+.scan-line-vertical {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #00d2ff;
+    box-shadow: 0 0 15px #00d2ff;
+    animation: scanLR 3s infinite ease-in-out;
+}
+
+@keyframes scanLR {
+    0% { left: 0; }
+    50% { left: 100%; }
+    100% { left: 0; }
+}
+
+.pulse-blue {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00d2ff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00d2ff;
+    animation: pulseB 1.5s infinite;
+}
+
+@keyframes pulseB {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Network Jamming Special Styles */
+.jamming-frame {
+    border-color: #a020f0 !important;
+}
+
+.purple-glow {
+    color: #a020f0;
+    text-shadow: 0 0 15px rgba(160, 32, 240, 0.6);
+}
+
+.jamming-visual {
+    width: 100%;
+    height: 300px;
+    background: #080808;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.wave {
+    position: absolute;
+    border: 2px solid #a020f0;
+    border-radius: 50%;
+    animation: ripple 2s infinite linear;
+    opacity: 0;
+}
+
+.wave-1 { width: 50px; height: 50px; animation-delay: 0s; }
+.wave-2 { width: 50px; height: 50px; animation-delay: 0.6s; }
+.wave-3 { width: 50px; height: 50px; animation-delay: 1.2s; }
+
+@keyframes ripple {
+    0% { width: 0; height: 0; opacity: 1; }
+    100% { width: 400px; height: 400px; opacity: 0; }
+}
+
+.interference-text {
+    color: #a020f0;
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: 5px;
+    animation: flicker 0.1s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.8; }
+}
+
+.pulse-purple {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #a020f0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #a020f0;
+    animation: pulseP 1.5s infinite;
+}
+
+@keyframes pulseP {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Environment Monitoring Special Styles */
+.env-frame {
+    border-color: #00ff88 !important;
+}
+
+.green-glow {
+    color: #00ff88;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+}
+
+.env-visual {
+    width: 100%;
+    height: 300px;
+    background: #080808;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.data-bar-container {
+    display: flex;
+    gap: 30px;
+    z-index: 2;
+}
+
+.data-bar {
+    width: 40px;
+    height: var(--h);
+    background: var(--c);
+    position: relative;
+    box-shadow: 0 0 20px var(--c);
+    animation: barGrow 2s ease-out;
+}
+
+@keyframes barGrow {
+    from { height: 0; }
+    to { height: var(--h); }
+}
+
+.data-bar span {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #888;
+    font-family: monospace;
+}
+
+.grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.pulse-green {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff88;
+    animation: pulseG 1.5s infinite;
+}
+
+@keyframes pulseG {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Security Protocol Special Styles */
+.sec-frame {
+    border-color: #ff0000 !important;
+}
+
+.red-glow {
+    color: #ff0000;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+.sec-visual {
+    width: 100%;
+    height: 300px;
+    background: radial-gradient(circle, #200000 0%, #050505 100%);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.lock-icon {
+    font-size: 4rem;
+    color: #ff0000;
+    z-index: 5;
+    filter: drop-shadow(0 0 10px #ff0000);
+}
+
+.shield-rings .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px dashed #ff0000;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.r1 { width: 150px; height: 150px; animation: rotateCW 10s linear infinite; }
+.r2 { width: 200px; height: 200px; animation: rotateCCW 15s linear infinite; }
+
+@keyframes rotateCW { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes rotateCCW { from { transform: translate(-50%, -50%) rotate(360deg); } to { transform: translate(-50%, -50%) rotate(0deg); } }
+
+.security-status {
+    position: absolute;
+    bottom: 20px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #ff0000;
+    letter-spacing: 4px;
+    font-weight: bold;
+}
+
+.pulse-red {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #ff0000;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff0000;
+    animation: pulseR 1.5s infinite;
+}
+
+@keyframes pulseR {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Custom Cursor Style */
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    transform: translate(-50%, -50%);
+}
+.cursor::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.glitch-hover:hover {
+    text-shadow: 2px 0 red, -2px 0 blue;
+    animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #050505; /* Load hoyar age dark thakbe */
+    overflow-x: hidden;
+}
+
+/* Background jeno content-er niche thake */
+canvas.vanta-canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Sobkichur niche thakbe */
+}
+
+/* Puron t-card ba module-card section e eituku check korun */
+.t-card, .module-card, .bento-box {
+    background: rgba(255, 255, 255, 0.03); /* Khub-i halka transparency */
+    backdrop-filter: blur(8px);             /* Pichoner background-ke blur korbe */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Background canvas-ke ektu soft korar jonno opacity use korte paren */
+canvas.vanta-canvas {
+    opacity: 0.6; /* Ekdom kora orange na hoye ektu soft dekhabe */
+    z-index: -1 !important;
+}
+
+/* টিম সেকশন স্টাইলিং */
+.team-section {
+    padding: 80px 10%;
+    background-color: #050505;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.sub-title {
+    color: #ff4d00;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    color: white;
+    margin-top: 10px;
+}
+
+/* গ্রিড লেআউট */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* মেম্বার কার্ড স্টাইল */
+.member-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    transition: 0.4s ease;
+    backdrop-filter: blur(10px); /* গ্লাস ইফেক্ট */
+}
+
+.member-card:hover {
+    transform: translateY(-10px);
+    border-color: #ff4d00;
+    box-shadow: 0 10px 30px rgba(255, 77, 0, 0.1);
+}
+
+/* ইমেজ কন্টেইনার */
+.image-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    padding: 5px;
+    border: 2px solid #ff4d00;
+    box-shadow: 0 0 15px rgba(255, 77, 0, 0.3);
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: grayscale(100%); /* প্রফেশনাল লুকের জন্য গ্রে-স্কেল */
+    transition: 0.4s;
+}
+
+.member-card:hover .image-container img {
+    filter: grayscale(0%); /* হোভার করলে কালার আসবে */
+}
+
+/* টেক্সট স্টাইলিং */
+.info-content h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.designation {
+    color: #ff4d00;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    color: white;
+}
+
+.team-section {
+    padding: 100px 5%;
+    text-align: center;
+    background: transparent; /* Vanta background-er jonno */
+}
+
+.section-header .sub-title {
+    color: #ff4d00;
+    letter-spacing: 4px;
+    font-size: 0.75rem;
+    margin-bottom: 5px;
+}
+
+.section-header .main-title {
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+/* কার্ডগুলো এক লাইনে রাখার জন্য */
+.team-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.member-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px 20px;
+    width: 260px; /* নির্দিষ্ট উইডথ দিলে সব কার্ড সমান দেখাবে */
+    transition: 0.4s ease;
+}
+
+.member-card:hover {
+    border-color: #ff4d00;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(255, 77, 0, 0.2);
+}
+
+.profile-frame {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 2px solid #ff4d00;
+    padding: 5px;
+    box-shadow: 0 0 15px rgba(255, 77, 0, 0.3);
+}
+
+.profile-frame img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.member-info h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.member-info .role {
+    color: #ff4d00;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.links a {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.75rem;
+    transition: 0.3s;
+}
+
+.links a:hover {
+    color: #fff;
+}
+
+.team-section {
+    width: 100%;
+    padding: 100px 0; /* ডানে-বামে প্যাডিং তুলে দেয়া হয়েছে */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+}
+
+/* সেকশন হেডার */
+.section-header {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+/* কমন গ্রুপ স্টাইল */
+.team-group {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px; /* মেম্বারদের কার্ড খুব বেশি ছড়িয়ে পড়া আটকাতে */
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+/* কার্ড স্টাইল */
+.member-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px 20px;
+    flex: 1; /* কার্ডগুলো সমান উইডথ নিবে */
+    max-width: 350px; /* কার্ডের সাইজ ব্যালেন্স করতে */
+    text-align: center;
+    transition: 0.5s ease;
+}
+
+.member-card:hover {
+    border-color: #ff4d00;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(255, 77, 0, 0.2);
+}
+
+/* প্রোফাইল ইমেজ ফ্রেম */
+.profile-frame {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    border: 2px solid #ff4d00;
+    padding: 6px;
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.2);
+    overflow: hidden;
+}
+
+.profile-frame img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: 0.5s;
+}
+
+.member-card:hover .profile-frame img {
+    filter: grayscale(0%);
+    transform: scale(1.1);
+}
+
+/* টেক্সট এবং লিঙ্ক */
+.member-info h3 { color: #fff; margin-bottom: 10px; font-size: 1.4rem; }
+.role { color: #ff4d00; font-size: 0.9rem; margin-bottom: 20px; }
+.links { display: flex; justify-content: center; gap: 20px; }
+.links a { color: #666; text-decoration: none; font-size: 0.8rem; transition: 0.3s; }
+.links a:hover { color: #fff; }
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 768px) {
+    .team-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    .member-card { width: 90%; }
+}
+
+/* টিম সেকশন - ফুল স্ক্রিন ও স্বচ্ছ ব্যাকগ্রাউন্ড */
+.team-section {
+    width: 100%;
+    padding: 100px 0;
+    background: transparent; /* ডার্ক ফিল্টার পুরোপুরি সরানো হয়েছে */
+    position: relative;
+    z-index: 1;
+}
+
+/* কার্ডের ডিজাইন - গ্লাস ইফেক্ট */
+.member-card {
+    background: rgba(255, 255, 255, 0.05); /* হালকা স্বচ্ছ */
+    border: 1px solid rgba(255, 77, 0, 0.2);
+    backdrop-filter: blur(15px); /* ঝকঝকে গ্লাস লুক */
+    border-radius: 20px;
+    padding: 40px 20px;
+    flex: 1;
+    max-width: 350px;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ইমেজের নতুন এনিমেশন (Floating Effect) */
+.profile-frame {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    border: 3px solid #ff4d00;
+    padding: 5px;
+    position: relative;
+    animation: float 4s ease-in-out infinite; /* ফ্লোটিং এনিমেশন */
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
+}
+
+/* বর্ডারে পালস ইফেক্ট */
+.profile-frame::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px; right: -5px; bottom: -5px;
+    border: 2px solid #ff4d00;
+    border-radius: 50%;
+    animation: pulseBorder 2s linear infinite;
+    opacity: 0;
+}
+
+.profile-frame img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: none; /* ডার্ক বা গ্রে-স্কেল ফিল্টার রিমুভ করা হয়েছে */
+}
+
+/* টেক্সট স্টাইল */
+.member-info h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.role {
+    color: #ff4d00;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* KEYFRAMES - নতুন এনিমেশন লজিক */
+
+/* ফ্লোটিং এনিমেশন: ছবি হালকা উপরে-নিচে নড়বে */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* পালস এনিমেশন: বর্ডার থেকে একটি রিং বের হবে */
+@keyframes pulseBorder {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* হোভার করলে কার্ডের কালার ব্রাইট হবে */
+.member-card:hover {
+    background: rgba(255, 77, 0, 0.08);
+    border-color: #ff4d00;
+    box-shadow: 0 20px 50px rgba(255, 77, 0, 0.3);
+}
+
+/* টিম সেকশন হেডারকে নিচে নামানোর জন্য */
+.section-header {
+    margin-top: 60px; /* হেডারটি ওপর থেকে নিচে নামবে */
+    margin-bottom: 80px; /* নিচের কার্ড থেকে দূরত্ব বাড়াবে */
+    text-align: center;
+}
+
+/* মেম্বার কার্ডের ভেতরে কন্টেন্ট সেন্টার করার জন্য */
+.member-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* কার্ডের সব এলিমেন্ট অনুভূমিকভাবে সেন্টার করবে */
+    justify-content: center; /* লম্বালম্বিভাবে সেন্টার করবে */
+    text-align: center;
+    padding: 40px 20px;
+    height: 100%; /* সব কার্ড সমান হাইট রাখার জন্য */
+}
+
+/* নাম এবং পদবীর স্টাইল ও এলাইনমেন্ট */
+.member-info {
+    width: 100%;
+    margin-top: 15px; /* ছবির নিচে সামান্য গ্যাপ */
+}
+
+.member-info h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 5px;
+    display: block; /* পুরো লাইন জুড়ে থাকবে */
+}
+
+.role {
+    font-size: 0.9rem;
+    color: #ff4d00;
+    margin-bottom: 15px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* সোশ্যাল লিঙ্কগুলো সেন্টারে আনার জন্য */
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+/* টিম সেকশনের হেডার স্টাইলিং */
+.section-header {
+    padding-top: 100px;    /* হেডারটি ওপর থেকে নিচে নামানোর জন্য */
+    margin-bottom: 80px;    /* নিচের কার্ডগুলো থেকে দূরত্ব বজায় রাখার জন্য */
+    text-align: center;
+    width: 100%;
+}
+
+.section-header .sub-title {
+    color: #ff4d00;
+    letter-spacing: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.section-header .main-title {
+    color: #fff;
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* টিম গ্রুপ লেআউট */
+.team-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+/* মেম্বার কার্ডের অভ্যন্তরীণ বিন্যাস */
+.member-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 77, 0, 0.2);
+    border-radius: 20px;
+    padding: 50px 30px;
+    flex: 1;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* সব এলিমেন্ট সেন্টারে রাখার জন্য */
+    text-align: center;
+    transition: 0.5s ease;
+}
+
+.member-info h3 {
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 20px 0 5px 0;
+}
+
+.member-info .role {
+    color: #ff4d00;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+/* --- [REPORT] MISSION_CONTROL স্টাইল --- */
+.system-intro {
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.intro-box {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #ff4d00;
+    border-left: 5px solid #ff4d00; /* কমান্ড প্রম্পট লুক */
+    padding: 25px;
+    max-width: 900px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(255, 77, 0, 0.1);
+}
+
+.report-header {
+    color: #ff4d00;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+.report-content p {
+    color: #ccc;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.highlight {
+    color: #fff;
+    font-weight: bold;
+    background: rgba(255, 77, 0, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* --- ট্যাকটিক্যাল মডিউলস স্টাইল --- */
+.tactical-section {
+    padding: 80px 5%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.sub-text {
+    color: #ff4d00;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+}
+
+.tactical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.t-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    border-radius: 15px;
+    padding: 40px 30px;
+    text-align: left;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.t-card:hover {
+    background: rgba(255, 77, 0, 0.05);
+    border-color: #ff4d00;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(255, 77, 0, 0.2);
+}
+
+.t-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.t-card h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.t-card p {
+    color: #aaa;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.see-more {
+    color: #ff4d00;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border: 1px solid #ff4d00;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.see-more:hover {
+    background: #ff4d00;
+    color: #fff;
+}
+
+/* --- এআই কোর সিস্টেম স্টাইল --- */
+.ai-core-section {
+    padding: 80px 5%;
+    background: radial-gradient(circle at center, rgba(255,77,0,0.05) 0%, transparent 70%);
+}
+
+.ai-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.ai-box {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 35px;
+    width: 400px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.ai-box h3 {
+    color: #ff4d00;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 77, 0, 0.3);
+    padding-bottom: 10px;
+}
+
+.ai-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ai-box li {
+    color: #eee;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ai-box li span {
+    color: #ff4d00;
+    font-size: 0.7rem;
+}
+
+/* ট্যাকটিক্যাল সেকশনকে ফুল পেজ করা */
+.tactical-section {
+    width: 100%;
+    min-height: 100vh; /* পুরো উইন্ডোর উচ্চতা নিবে */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* ওপর-নিচে মাঝখানে রাখবে */
+    align-items: center;
+    padding: 80px 5%;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* সেকশন টাইটেল */
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.sub-text {
+    color: #ff4d00;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title h2 {
+    color: #fff;
+    font-size: 2.8rem;
+    text-transform: uppercase;
+}
+
+/* গ্রিড লেআউট - ফুল উইডথ জুড়ে */
+.tactical-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* এক লাইনে ৩টি কার্ড */
+    gap: 30px;
+    width: 100%;
+    max-width: 1400px; /* অতিরিক্ত ছড়িয়ে পড়া রোধ করতে */
+}
+
+/* কার্ড স্টাইল */
+.t-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 77, 0, 0.15);
+    border-radius: 20px;
+    padding: 45px 30px;
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.t-card:hover {
+    transform: translateY(-15px);
+    border-color: #ff4d00;
+    background: rgba(255, 77, 0, 0.05);
+    box-shadow: 0 20px 50px rgba(255, 77, 0, 0.2);
+}
+
+/* আইকন এবং টেক্সট */
+.t-icon {
+    font-size: 3rem;
+    margin-bottom: 25px;
+}
+
+.t-card h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.t-card p {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* See More বাটন */
+.see-more {
+    display: inline-block;
+    color: #ff4d00;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    border: 1px solid #ff4d00;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: 0.3s;
+    text-align: center;
+    width: fit-content;
+}
+
+.see-more:hover {
+    background: #ff4d00;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 77, 0, 0.4);
+}
+
+/* রেসপন্সিভ - ছোট স্ক্রিনের জন্য */
+@media (max-width: 1100px) {
+    .tactical-grid {
+        grid-template-columns: repeat(2, 1fr); /* ট্যাবে ২টি করে */
+    }
+}
+
+@media (max-width: 768px) {
+    .tactical-section {
+        height: auto; /* মোবাইলে স্ক্রল করার সুবিধা */
+    }
+    .tactical-grid {
+        grid-template-columns: 1fr; /* মোবাইলে ১টি করে */
+    }
+    .section-title h2 {
+        font-size: 2rem;
+    }
+}
+
+/* ট্যাকটিক্যাল সেকশনের ওপরের স্পেসিং কমানো */
+.tactical-section {
+    padding-top: 20px !important; /* স্ক্রিনশটের বড় গ্যাপটি কমানোর জন্য */
+    min-height: auto; /* যদি খুব বেশি গ্যাপ থাকে তবে এটি হাইট অ্যাডজাস্ট করবে */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* টাইটেলের গ্যাপ অ্যাডজাস্টমেন্ট */
+.tactical-section .section-title {
+    margin-top: 0;
+    margin-bottom: 40px; /* কার্ড থেকে টাইটেলের দূরত্ব */
+}
+
+/* ট্যাকটিক্যাল গ্রিডকে ফ্লেক্সিবল করা */
+.tactical-grid {
+    display: flex;
+    flex-wrap: wrap;       /* কার্ডগুলোকে নিচে নামানোর জন্য */
+    justify-content: center; /* সব কার্ডকে সেন্টারে রাখার জন্য প্রধান কোড */
+    gap: 30px;            /* কার্ডগুলোর মাঝখানের ফাঁকা জায়গা */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* কার্ডের উইডথ ফিক্সড রাখা যাতে এলাইনমেন্ট ঠিক থাকে */
+.t-card {
+    flex: 0 1 350px;      /* কার্ডের সাইজ ৩৫০ পিক্সেল (প্রয়োজনমতো পরিবর্তন করতে পারেন) */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 77, 0, 0.15);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: left;
+    transition: 0.4s ease;
+}
+
+/* আইকন স্টাইল */
+.t-icon i {
+    color: #ff4d00;
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 8px rgba(255, 77, 0, 0.4));
+    transition: all 0.4s ease;
+}
+
+/* আইকনগুলোর জন্য কনস্ট্যান্ট "সফট পালস" অ্যানিমেশন */
+.t-icon {
+    display: inline-block;
+    animation: iconFloat 3s infinite ease-in-out;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+}
+
+/* কার্ড হোভার করলে আইকনের বিশেষ অ্যানিমেশন */
+.t-card:hover .t-icon i {
+    color: #fff;
+    transform: rotateY(180deg); /* আইকনটি ঘুরে যাবে */
+    filter: drop-shadow(0 0 15px #ff4d00);
+}
+
+/* আলাদা আলাদা আইকনের জন্য বিশেষ ইফেক্ট */
+.fa-eye { animation: scanEye 2s infinite alternate; } /* চোখ স্ক্যান করবে */
+.fa-broadcast-tower { animation: signalPulse 1.5s infinite; } /* টাওয়ার সিগন্যাল দিবে */
+
+@keyframes scanEye {
+    from { transform: translateX(-5px); }
+    to { transform: translateX(5px); }
+}
+
+@keyframes signalPulse {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.3; transform: scale(1.2); }
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    padding: 0 5%;
+}
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 77, 0, 0.3);
+}
+.gallery-item img {
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.1); /* জুম ইফেক্ট */
+}
+
+/* ফিউচার সেকশন স্টাইল */
+.future-section {
+    padding: 80px 5%;
+    background: transparent;
+    text-align: center;
+}
+
+.upgrade-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+/* আপগ্রেড কার্ড ডিজাইন */
+.u-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 77, 0, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    width: 350px;
+    display: flex;
+    gap: 20px;
+    text-align: left;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.u-card:hover {
+    border-color: #ff4d00;
+    background: rgba(255, 77, 0, 0.03);
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 77, 0, 0.1);
+}
+
+/* আইকন অ্যানিমেশন */
+.u-icon i {
+    font-size: 2rem;
+    color: #ff4d00;
+    filter: drop-shadow(0 0 10px rgba(255, 77, 0, 0.5));
+}
+
+/* কন্টেন্ট স্টাইল */
+.u-content h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.u-content p {
+    color: #aaa;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* স্ট্যাটাস ট্যাগ */
+.status {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #ff4d00;
+    border: 1px solid #ff4d00;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* বর্ডার লাইন ইফেক্ট (Pseudo Element) */
+.u-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, #ff4d00);
+    transition: 0.5s;
+}
+
+.u-card:hover::before {
+    left: 100%;
+}
+
+.defense-footer {
+    background: #000;
+    padding: 60px 0 30px 0;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* উপরের ৩টি লোগোর গ্লো ইফেক্ট */
+.recognition-area {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.rec-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.rec-item img {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8)); /* সায়ান গ্লো */
+    transition: 0.3s;
+}
+
+.rec-item span {
+    color: #00ffff;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+/* পার্টনার সেকশন স্টাইল */
+.partners-container {
+    background: rgba(10, 10, 10, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px 20px;
+}
+
+.partner-title {
+    color: #555;
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.partners-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    opacity: 0.7;
+}
+
+.partners-grid img {
+    height: 35px;
+    filter: grayscale(100%) brightness(150%); /* লোগোগুলোকে একরকম দেখানোর জন্য */
+    transition: 0.3s;
+}
+
+.partners-grid img:hover {
+    filter: grayscale(0%) brightness(100%);
+    opacity: 1;
+}
+
+/* কপিরাইট টেক্সট */
+.footer-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+    color: #008888;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+}
+
+.mission-footer-v2 {
+    background: #000;
+    padding: 50px 0 20px 0;
+    text-align: center;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* টপ ব্র্যান্ড রো */
+.brand-row {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+.brand-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-item img {
+    height: 55px;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.7)); /* সায়ান গ্লো */
+    transition: transform 0.3s;
+}
+
+.brand-item img:hover {
+    transform: scale(1.1);
+}
+
+.brand-item span {
+    font-size: 0.75rem;
+    color: #00ffff;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+/* ডিভাইডার এবং টাইটেল */
+.footer-divider {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    width: 80%;
+    margin: 30px auto;
+}
+
+.partner-title {
+    color: #444;
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    margin-bottom: 25px;
+}
+
+/* ডিফেন্স লোগো গ্রিড */
+.defense-icons-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    opacity: 0.8;
+}
+
+.defense-icons-row img {
+    height: 35px;
+    filter: grayscale(100%) brightness(1.5);
+    transition: 0.3s;
+}
+
+.defense-icons-row img:hover {
+    filter: grayscale(0%) brightness(1);
+    opacity: 1;
+}
+
+/* কপিরাইট সেকশন */
+.footer-copyright {
+    margin-top: 40px;
+    font-size: 0.7rem;
+    color: #008888;
+    letter-spacing: 2px;
+}
+
+/* ফুটার বটম সেকশন */
+.footer-bottom-info {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(0, 255, 255, 0.1); /* হালকা সায়ান ডিভাইডার */
+    text-align: center;
+}
+
+.copyright-text {
+    color: #888;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.highlight-name {
+    color: #00ffff;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+}
+
+.dev-text {
+    color: #555;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+
+/* পোর্টফোলিও লিঙ্ক স্টাইল */
+.portfolio-link {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.portfolio-link:hover {
+    color: #fff;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+/* ডিটেইল পেজ কাস্টমাইজেশন */
+.detail-page {
+    background-color: #050505;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* স্ক্যানিং ফ্রেম ও ইফেক্ট */
+.scan-frame {
+    position: relative;
+    border: 1px solid rgba(255, 77, 0, 0.2);
+    padding: 10px;
+    background: rgba(255, 77, 0, 0.02);
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #ff4d00;
+    box-shadow: 0 0 15px #ff4d00;
+    animation: scanMove 3s infinite linear;
+}
+
+@keyframes scanMove {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+/* স্পেকস বক্স ডিজাইন */
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 50px 0;
+    padding: 0 5%;
+}
+
+.spec-box {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid #ff4d00;
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.spec-box:hover {
+    background: rgba(255, 77, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.spec-box i {
+    font-size: 1.5rem;
+    color: #ff4d00;
+    margin-bottom: 10px;
+}
+
+/* কর্নার বর্ডার ইফেক্ট */
+.corner-border {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff4d00;
+}
+
+.top-left { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+.bottom-right { bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
+

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rover 71 | Environmental Monitoring</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-orange: #ff5e00; 
+            --accent-orange: #e65100;
+            --bg-black: #080808;
+            --card-bg: #111111; /* কার্ডের ব্যাকগ্রাউন্ড সামান্য হালকা করা হয়েছে */
+            --text-gray: #d1d1d1; /* টেক্সট কালার আরও ব্রাইট করা হয়েছে */
+            --border-color: rgba(255, 94, 0, 0.3);
+            --base-font: 'Hind Siliguri', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: #ffffff;
+            font-family: var(--base-font);
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Animations */
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--primary-orange)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--primary-orange)); }
+        }
+
+        @keyframes rotate-bio { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Top Bar */
+        .top-nav {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--primary-orange);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.5);
+        }
+
+        .status-dot { color: #00ff88; margin-right: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* Header */
+        .header-section { text-align: center; padding-top: 20px; z-index: 1; }
+        .header-section span {
+            color: var(--primary-orange);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+        .header-section h1 {
+            font-size: 42px;
+            margin: 5px 0;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 94, 0, 0.2);
+        }
+
+        /* Grid */
+        .dashboard-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px 50px;
+            z-index: 1;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 22px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .module-card:hover {
+            border-color: var(--primary-orange);
+            background: #161616;
+            box-shadow: 0 0 30px rgba(255, 94, 0, 0.15);
+        }
+
+        .icon {
+            color: var(--primary-orange);
+            font-size: 28px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .module-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+            border-left: 3px solid var(--primary-orange);
+            padding-left: 10px;
+        }
+
+        .module-card p {
+            font-size: 15px; /* ফন্ট সাইজ বাড়ানো হয়েছে */
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; color: var(--primary-orange); font-size: 13px; font-weight: 700; border-bottom: 1px solid var(--border-color); padding: 10px 5px; }
+        td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #ffffff; font-weight: 600; }
+
+        /* Progress Bar */
+        .gas-stats { margin-top: 15px; }
+        .bar-bg { height: 6px; background: #222; margin-top: 8px; border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--primary-orange); box-shadow: 0 0 10px var(--primary-orange); }
+
+        /* Special Layouts */
+        .mechanism { grid-column: 1; }
+        .spectrum { grid-column: 2 / span 2; }
+        .warning { border-color: #ff3333; }
+        .warning h2 { border-left-color: #ff3333; color: #ff3333; }
+
+        footer {
+            padding: 12px;
+            background: var(--primary-orange);
+            color: #000;
+            text-align: center;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Specific Icon Animations */
+        .fa-microchip { animation: pulse-icon 2s infinite ease-in-out; }
+        .fa-biohazard { animation: rotate-bio 6s infinite linear; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-glow"></div>
+
+    <div class="top-nav">
+        <div><i class="fas fa-robot"></i> ROVER-71 : SYSTEM ONLINE</div>
+        <div><span class="status-dot">●</span> SENSOR_DATA_ENCRYPTED</div>
+    </div>
+
+    <div class="header-section">
+        <span>TACTICAL BRIEFING</span>
+        <h1>পরিবেশ পর্যবেক্ষণ মডিউল</h1>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <div class="module-card mechanism">
+            <div class="icon"><i class="fas fa-microchip"></i></div>
+            <h2>মেকানিজম</h2>
+            <p>রভারের সেন্সরগুলো রিয়েল-টাইমে বায়ুমণ্ডলীয় ডাটা সংগ্রহ করে। এটি উন্নত ফিল্টার ব্যবহার করে বাতাসের বিষাক্ত উপাদান শনাক্ত করে।</p>
+        </div>
+
+        <div class="module-card spectrum">
+            <div class="icon"><i class="fas fa-vial-circle-check"></i></div>
+            <h2>সেন্সর রিডিং</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>প্যারামিটার</th>
+                        <th>বর্তমান ভ্যালু</th>
+                        <th>স্ট্যাটাস</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>তাপমাত্রা (Temp)</td>
+                        <td>28.4°C</td>
+                        <td style="color: #00ff88;">NORMAL</td>
+                    </tr>
+                    <tr>
+                        <td>আর্দ্রতা (Humidity)</td>
+                        <td>45%</td>
+                        <td style="color: #00ff88;">STABLE</td>
+                    </tr>
+                    <tr>
+                        <td>CO2 ঘনত্ব</td>
+                        <td>412 PPM</td>
+                        <td style="color: #00ff88;">SAFE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="module-card methods">
+            <div class="icon"><i class="fas fa-biohazard"></i></div>
+            <h2>গ্যাস ডিটেকশন</h2>
+            <div class="gas-stats">
+                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                    <span>METHANE (CH4)</span><span>0.02%</span>
+                </div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 15%;"></div></div>
+            </div>
+            <div class="gas-stats" style="margin-top: 15px;">
+                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+                    <span>OXYGEN (O2)</span><span>20.9%</span>
+                </div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: #00d4ff; box-shadow: 0 0 10px #00d4ff;"></div></div>
+            </div>
+        </div>
+
+        <div class="module-card usecases">
+            <div class="icon"><i class="fas fa-shield-halved"></i></div>
+            <h2>ব্যবহারের ক্ষেত্র</h2>
+            <p>• প্রতিকূল পরিবেশে রভারের সুরক্ষা নিশ্চিতকরণ।<br>
+               • বিষাক্ত গ্যাসের উৎস শনাক্তকরণ ও ম্যাপ তৈরি।<br>
+               • বায়ুচাপের রিয়েল-টাইম ডাটা ক্লাউড সিঙ্ক।</p>
+        </div>
+
+        <div class="module-card warning">
+            <div class="icon" style="color: #ff3333;"><i class="fas fa-triangle-exclamation"></i></div>
+            <h2>সিস্টেম অ্যালার্ট</h2>
+            <p>সেন্সরগুলো অত্যন্ত সংবেদনশীল। ভুল রিডিং এড়াতে সেন্সর প্রোব পরিষ্কার রাখুন। গ্যাস লিকেজ শনাক্ত হলে দ্রুত নিরাপদ দূরত্বে সরিয়ে নিন।</p>
+        </div>
+
+    </div>
+
+    <footer>Rover 71 | Environmental Monitoring Unit | Mission 2026</footer>
+
+    <script>
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>
