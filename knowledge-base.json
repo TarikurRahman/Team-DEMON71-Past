@@ -1,0 +1,157 @@
+{
+  "team_name": "DEMON-71",
+  "project_title": "DEMON-71 | Advanced Tactical Unit & Surveillance System",
+  "organization": "National Science & Technology Fair (NMST), Bangladesh",
+  "institution": "Alif Subhan Chowdhury Govt. College (ASCGC)",
+  "government_affiliation": "Government of Bangladesh (BD GOVT)",
+  "team_members": [
+    {
+      "name": "Tarikur Rahman (তারিকুর রহমান)",
+      "role": "System Architect & Lead Developer (সিস্টেম আর্কিটেক্ট)",
+      "github": "https://github.com/tarikurrahmanbd",
+      "facebook": "https://www.facebook.com/tarikurrahman08",
+      "portfolio": "https://yourtarikur.vercel.app/"
+    },
+    {
+      "name": "Tarek Ahmed Tanbir (তারেক আহমেদ তানভীর)",
+      "role": "Project Director & Hardware Engineer (প্রকল্প পরিচালক ও হার্ডওয়্যার ইঞ্জিনিয়ার)",
+      "github": "https://github.com/TarekTanbir",
+      "facebook": "https://www.facebook.com/tarek.tanbir10"
+    },
+    {
+      "name": "Tufazzul Haque (তোফাজ্জল হক)",
+      "role": "Research Assistant (রিসার্চ অ্যাসিস্ট্যান্ট)",
+      "facebook": "https://www.facebook.com/tufazzul.haque.339297"
+    },
+    {
+      "name": "Naima Rahman Jui (নাইমা রহমান জুইঁ)",
+      "role": "Research Assistant (রিসার্চ অ্যাসিস্ট্যান্ট)"
+    },
+    {
+      "name": "Ruma Akter (রুমা আক্তার)",
+      "role": "Research Assistant (রিসার্চ অ্যাসিস্ট্যান্ট)",
+      "facebook": "https://www.facebook.com/profile.php?id=61568500605913"
+    }
+  ],
+  "rover_overview": {
+    "name": "DEMON-71 (Rover 71)",
+    "tagline": "Next-Generation Autonomous Explorer & Tactical Defense Rover",
+    "mission_summary": "DEMON-71 is capable of direct platoon-level real-time intelligence sharing. It detects armed terrorists and threats, transmitting live feeds to Headquarters (HQ). Its electronic warfare jamming module neutralizes drone attacks, while specialized robotic arms, Ground Penetrating Radar (GPR), gas sensors, and AES-256 security protocols ensure multi-mission battlefield superiority.",
+    "core_specifications": {
+      "processor": "Raspberry Pi 5 (8GB RAM)",
+      "latency": "0.02ms",
+      "wireless_range": "3.5 KM Max Range",
+      "vision_engine": "YOLOv8 Object Detection (98.4% Accuracy)",
+      "encryption": "AES-256 Bit Encryption Layer",
+      "operating_temperature": "-45°C to Ambient",
+      "signal_type": "Live Encrypted Stream",
+      "battery_level": "94% - 98%"
+    }
+  },
+  "tactical_modules": [
+    {
+      "id": "bomb_defusal",
+      "name": "Bomb Defusal Module (বোমা নিষ্ক্রিয়করণ ইউনিট)",
+      "description": "Uses a high-precision 5-axis robotic arm and HD camera for safe-distance analysis and defusal of hazardous explosives.",
+      "key_specs": {
+        "precision_index": "98%",
+        "control_type": "4-DOF Movement",
+        "actuators": "High Torque Servos",
+        "gripper": "Smart Tactile System",
+        "thermal_feed": "Infrared Sensors",
+        "structure": "Aluminum Alloy & Carbon Fiber Frame",
+        "battery_health": "94%"
+      }
+    },
+    {
+      "id": "ai_surveillance",
+      "name": "AI Surveillance System (এআই সার্ভেইল্যান্স)",
+      "description": "Monitors target areas in real-time using computer vision and object recognition to identify hostile vs friendly entities and alert HQ.",
+      "key_specs": {
+        "ai_engine": "YOLOv8",
+        "accuracy": "98.4%",
+        "processor": "Raspberry Pi 5 (8GB)",
+        "latency": "0.02ms",
+        "video_feed": "Encrypted Streaming CAM_01 (127.0.0.1:5000)"
+      }
+    },
+    {
+      "id": "mine_detection",
+      "name": "Mine Detection Unit (মাইন ডিটেকশন ইউনিট)",
+      "description": "Scans terrain using Ground Penetrating Radar (GPR) sensors to locate buried landmines in forests, deserts, or mud, sending real-time coordinates to HQ.",
+      "key_specs": {
+        "sensor_type": "GPR Radar System",
+        "frequency": "500MHz - 2GHz",
+        "detection_depth": "Up to 1.5 meters",
+        "accuracy": "99.2% Sub-surface",
+        "terrain_modes": "Forest / Desert / Mud",
+        "data_output": "Real-time Encrypted GPS Map Sync"
+      }
+    },
+    {
+      "id": "network_jamming",
+      "name": "Network Jamming Unit (নেটওয়ার্ক জ্যামিং মডিউল)",
+      "description": "Electronic Warfare module that detects hostile drones or radio signals and immediately transmits high-power noise signals to sever enemy communications.",
+      "key_specs": {
+        "drone_frequency": "2.4 GHz Jamming (Critical)",
+        "video_frequency": "5.8 GHz Video Link Interruption",
+        "rf_remote": "RF Remote Control Monitoring",
+        "noise_power": "92%",
+        "blocking_range": "500m",
+        "coverage": "360° Signal Blocking"
+      }
+    },
+    {
+      "id": "environmental_monitoring",
+      "name": "Environment Monitoring (পরিবেশ পর্যবেক্ষণ মডিউল)",
+      "description": "Monitors atmospheric parameters and detects toxic chemical/gas leaks in real-time, uploading sensor telemetries to the cloud.",
+      "key_specs": {
+        "temperature": "28.4°C (Normal)",
+        "humidity": "45% (Stable)",
+        "co2_concentration": "412 PPM (Safe)",
+        "methane_ch4": "0.02%",
+        "oxygen_o2": "20.9%"
+      }
+    },
+    {
+      "id": "security_protocols",
+      "name": "Security & Tracking Protocols (নিরাপত্তা প্রোটোকল)",
+      "description": "Enforces live satellite-linked GPS tracking for rescue ops, AES-256 bit encrypted communications, physical tamper protection, and automatic self-destruct data wiping if capture risk is detected.",
+      "key_specs": {
+        "gps_coordinates": "Latitude 23.8103° N | Longitude 90.4125° E | Altitude 12.5m",
+        "encryption": "AES-256 Bit Encryption",
+        "anti_capture": "Auto-Data Eraser (Self-destruct wipe)",
+        "recovery_mode": "Emergency Beacon Signal & Remote Lock"
+      }
+    }
+  ],
+  "future_upgrades": [
+    {
+      "title": "Night Vision 2.0 (নাইট ভিশন ২.০)",
+      "status": "In Development",
+      "description": "Adding thermal imaging and low-light enhancement for clear target identification in total darkness."
+    },
+    {
+      "title": "Autonomous Navigation (স্বয়ংক্রিয় ন্যাভিগেশন)",
+      "status": "Researching",
+      "description": "Integrating LiDAR and GPS waypoint navigation for operator-free autonomous traversal."
+    },
+    {
+      "title": "Deep Learning Core (ডিপ লার্নিং কোর)",
+      "status": "Planned",
+      "description": "Upgrading neural networks beyond YOLOv8 for sub-second precision threat forecasting."
+    }
+  ],
+  "strategic_partners": [
+    "Special Security Force (SSF)",
+    "Bangladesh Army Aviation",
+    "Bangladesh Navy",
+    "Bangladesh Air Force (BAF)",
+    "Border Guard Bangladesh (BGB)",
+    "Rapid Action Battalion (RAB)",
+    "Bangladesh Police",
+    "Para Commando Brigade (Army Special Force)",
+    "Counter Terrorism and Transnational Crime (CTTC)",
+    "Armed Police Battalion (APBn)"
+  ]
+}

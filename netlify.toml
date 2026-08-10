@@ -1,0 +1,11 @@
+# Netlify Configuration for DEMON-71 Defence Rover Website
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Route /api/chat seamlessly to the Netlify Serverless Function
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200

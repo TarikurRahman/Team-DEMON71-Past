@@ -1,0 +1,424 @@
+/* ======================================================
+   DEMON-71 DEFENCE ROVER TEAM - AI CHATBOT STYLES
+   Color Theme: Synchronized with DEMON-71 Website Theme
+   - Accent: Martian Tactical Orange (#ff5e00 / #ff4d00)
+   - Background: Deep Cyber Dark (#080808 / #0e0e0e / #111111)
+   - Status Dot: Tactical Green (#00ff88)
+   Isolated Namespace: .rover-ai-*
+   ====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+/* Floating Trigger Button */
+.rover-ai-trigger {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff5e00 0%, #d84300 100%);
+  color: #ffffff;
+  border: 2px solid rgba(255, 140, 66, 0.6);
+  box-shadow: 0 0 25px rgba(255, 94, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+}
+
+.rover-ai-trigger:hover {
+  transform: scale(1.1) rotate(5deg);
+  background: linear-gradient(135deg, #ff731a 0%, #ff5e00 100%);
+  box-shadow: 0 0 35px rgba(255, 94, 0, 0.85), inset 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.rover-ai-trigger .rover-ai-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 13px;
+  height: 13px;
+  background-color: #00ff88;
+  border: 2px solid #080808;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff88;
+  animation: rover-pulse-dot 2s infinite;
+}
+
+@keyframes rover-pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+/* Chat Window Panel */
+.rover-ai-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 28px;
+  width: 385px;
+  height: 585px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 120px);
+  background: rgba(8, 8, 8, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 94, 0, 0.4);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 94, 0, 0.2);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.rover-ai-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Header */
+.rover-ai-header {
+  padding: 16px 20px;
+  background: linear-gradient(90deg, rgba(255, 94, 0, 0.25) 0%, rgba(17, 17, 17, 0.95) 100%);
+  border-bottom: 1px solid rgba(255, 94, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rover-ai-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rover-ai-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff5e00 0%, #d84300 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 18px;
+  box-shadow: 0 0 12px rgba(255, 94, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rover-ai-title-wrap h3 {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.rover-ai-status {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  color: #ffab7a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.rover-ai-status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #00ff88;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px #00ff88;
+}
+
+.rover-ai-close {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rover-ai-close:hover {
+  color: #ff5e00;
+  background: rgba(255, 94, 0, 0.1);
+}
+
+/* Chat Messages Container */
+.rover-ai-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scroll-behavior: smooth;
+  background: #080808;
+}
+
+.rover-ai-body::-webkit-scrollbar {
+  width: 5px;
+}
+.rover-ai-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 94, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* Welcome Card & Suggestions */
+.rover-ai-welcome {
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid rgba(255, 94, 0, 0.3);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 6px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.rover-ai-welcome p {
+  margin: 0 0 10px 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+.rover-ai-welcome strong {
+  color: #ff5e00;
+}
+
+.rover-ai-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rover-ai-chip {
+  background: rgba(255, 94, 0, 0.1);
+  border: 1px solid rgba(255, 94, 0, 0.35);
+  color: #ffab7a;
+  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.rover-ai-chip:hover {
+  background: rgba(255, 94, 0, 0.25);
+  color: #ffffff;
+  border-color: #ff5e00;
+  box-shadow: 0 0 10px rgba(255, 94, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Message Bubbles */
+.rover-ai-msg {
+  display: flex;
+  gap: 10px;
+  max-width: 88%;
+  animation: rover-fade-in 0.3s ease forwards;
+}
+
+@keyframes rover-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rover-ai-msg.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.rover-ai-msg.bot {
+  align-self: flex-start;
+}
+
+.rover-ai-msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.rover-ai-msg.bot .rover-ai-msg-avatar {
+  background: #ff5e00;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 94, 0, 0.4);
+}
+
+.rover-ai-msg.user .rover-ai-msg-avatar {
+  background: #222222;
+  color: #d1d1d1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rover-ai-bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.rover-ai-msg.user .rover-ai-bubble {
+  background: linear-gradient(135deg, #ff5e00 0%, #d84300 100%);
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+  box-shadow: 0 4px 14px rgba(255, 94, 0, 0.35);
+}
+
+.rover-ai-msg.bot .rover-ai-bubble {
+  background: rgba(17, 17, 17, 0.95);
+  border: 1px solid rgba(255, 94, 0, 0.25);
+  color: #e0e0e0;
+  border-bottom-left-radius: 2px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.rover-ai-bubble p {
+  margin: 0 0 6px 0;
+}
+.rover-ai-bubble p:last-child {
+  margin-bottom: 0;
+}
+.rover-ai-bubble ul, .rover-ai-bubble ol {
+  margin: 4px 0;
+  padding-left: 18px;
+}
+.rover-ai-bubble li {
+  margin-bottom: 3px;
+}
+.rover-ai-bubble strong {
+  color: #ff9d66;
+}
+
+/* Typing Indicator */
+.rover-ai-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+}
+
+.rover-ai-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #ff5e00;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 94, 0, 0.6);
+  animation: rover-bounce 1.4s infinite ease-in-out both;
+}
+
+.rover-ai-dot:nth-child(1) { animation-delay: -0.32s; }
+.rover-ai-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes rover-bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* Footer / Input Area */
+.rover-ai-footer {
+  padding: 12px 14px;
+  background: rgba(10, 10, 10, 0.98);
+  border-top: 1px solid rgba(255, 94, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rover-ai-input-field {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 94, 0, 0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-family: 'Space Grotesk', sans-serif;
+  outline: none;
+  transition: all 0.2s ease;
+  resize: none;
+  height: 40px;
+  max-height: 100px;
+}
+
+.rover-ai-input-field:focus {
+  border-color: #ff5e00;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 12px rgba(255, 94, 0, 0.35);
+}
+
+.rover-ai-input-field::placeholder {
+  color: #777777;
+}
+
+.rover-ai-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff5e00 0%, #d84300 100%);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(255, 94, 0, 0.4);
+}
+
+.rover-ai-send-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ff731a 0%, #ff5e00 100%);
+}
+
+.rover-ai-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .rover-ai-panel {
+    right: 12px;
+    bottom: 80px;
+    width: calc(100vw - 24px);
+    height: calc(100vh - 100px);
+    border-radius: 14px;
+  }
+  .rover-ai-trigger {
+    right: 16px;
+    bottom: 16px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+}
