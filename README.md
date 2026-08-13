@@ -7,7 +7,22 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Font Awesome](https://img.shields.io/badge/Font%20Awesome-528DD7?style=for-the-badge&logo=fontawesome&logoColor=white)
 
-**Live Demo:** https://demon71-past.netlify.app
+<!-- Website Full Preview -->
+<div align="center">
+
+  ## 🖥️ Live Preview
+
+  <a href="https://demon71-past.netlify.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_VISIT_LIVE_SITE-demon71--past.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" alt="Visit Live Site" />
+  </a>
+
+  <br /><br />
+
+  <a href="https://demon71-past.netlify.app/" target="_blank">
+    <img src="https://github.com/user-attachments/assets/76f713cc-e081-4db3-bf0c-ce87cc18023d" alt="Team DEMON71 Past Website Preview" width="100%" />
+  </a>
+
+</div>
 
 ---
 
